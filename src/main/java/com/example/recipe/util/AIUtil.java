@@ -55,9 +55,6 @@ public class AIUtil {
         ResponseEntity<String> response = restTemplate.postForEntity(OPENAI_API_URL, entity, String.class);
 
         System.out.println("API Response: " + response.getBody()); // Debugging
-        // Parse the response to extract ingredients
-        // This is a placeholder for actual implementation
-        // Assuming the response body contains a JSON array of ingredients
-        return List.of(); // Replace with actual parsing logic
+        return List.of();
     }
 }
