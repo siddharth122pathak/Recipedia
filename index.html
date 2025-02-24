@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <img src="C:\Users\Siddharth Pathak\Downloads\logo.png" alt="Logo" class="logo"> <!-- Add logo -->
+    <img src="logo.png" alt="Logo" class="logo"> <!-- Add logo -->
     <div class="container">
         <h1>Turn leftovers into gourmet meals—powered by AI!</h1>
         <div class="input-section">
@@ -20,6 +20,7 @@
             <input type="file" id="imageUpload" accept="image/*">
             <button id="uploadImageBtn">Upload Image</button>
         </div>
+        <div id="loading" class="loader" style="display: none;"></div>
         <div id="recipes" class="recipes-section">
             <h2>Recommended Recipes</h2>
             <ul id="recipeList"></ul>

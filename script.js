@@ -1,5 +1,12 @@
 document.getElementById('getRecipesBtn').addEventListener('click', function() {
     const ingredients = document.getElementById('ingredients').value.split(',').map(item => item.trim());
+    const loading = document.getElementById('loading');
+    const recipeList = document.getElementById('recipeList');
+
+    // Show loading spinner
+    loading.style.display = 'block';
+    recipeList.innerHTML = '';
+
     fetch(`/api/recipes/v1/recipes/by-ingredients?ingredients=${ingredients.join(',')}`, {
         method: 'GET',
         headers: {
@@ -9,8 +16,9 @@ document.getElementById('getRecipesBtn').addEventListener('click', function() {
     .then(response => response.json())
     .then(data => {
         console.log('API Response:', data); // Debugging
-        const recipeList = document.getElementById('recipeList');
-        recipeList.innerHTML = '';
+
+        // Hide loading spinner
+        loading.style.display = 'none';
 
         data.forEach(recipe => {
             console.log('Recipe:', recipe); // Debugging each recipe object
@@ -26,12 +34,23 @@ document.getElementById('getRecipesBtn').addEventListener('click', function() {
             recipeList.appendChild(li);
         });
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        // Hide loading spinner
+        loading.style.display = 'none';
+    });
 });
 
 document.getElementById('uploadImageBtn').addEventListener('click', function() {
     const fileInput = document.getElementById('imageUpload');
     const formData = new FormData();
+    const loading = document.getElementById('loading');
+    const recipeList = document.getElementById('recipeList');
+
+    // Show loading spinner
+    loading.style.display = 'block';
+    recipeList.innerHTML = '';
+
     formData.append('file', fileInput.files[0]);
 
     fetch('/api/recipes/v1/recipes/upload-image', {
@@ -41,8 +60,10 @@ document.getElementById('uploadImageBtn').addEventListener('click', function() {
     .then(response => response.json())
     .then(data => {
         console.log('API Response:', data); // Debugging
-        const recipeList = document.getElementById('recipeList');
-        recipeList.innerHTML = '';
+
+        // Hide loading spinner
+        loading.style.display = 'none';
+
         data.forEach(recipe => {
             console.log('Recipe:', recipe); // Debugging each recipe object
 
@@ -57,5 +78,9 @@ document.getElementById('uploadImageBtn').addEventListener('click', function() {
             recipeList.appendChild(li);
         });
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        // Hide loading spinner
+        loading.style.display = 'none';
+    });
 });
