@@ -52,13 +52,26 @@
 
     <build>
         <plugins>
+            <!-- Spring Boot Plugin to build a fully executable JAR -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>com.example.recipe.RecipeRecommenderAppApplication</mainClass>
+                    <layers>
+                        <enabled>false</enabled>
+                    </layers>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
+
+            <!-- Ensure Java 17 compatibility -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -68,6 +81,8 @@
                     <target>17</target>
                 </configuration>
             </plugin>
+
+            <!-- Ensure the JAR is built with a manifest -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
