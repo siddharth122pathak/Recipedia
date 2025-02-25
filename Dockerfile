@@ -5,7 +5,9 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
 # Copy the Maven wrapper and project files
-COPY mvnw pom.xml ./
+COPY mvnw ./
+COPY .mvn .mvn
+COPY pom.xml ./
 COPY src ./src
 
 # Grant execution permission for the Maven wrapper
