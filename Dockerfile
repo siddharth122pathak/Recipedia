@@ -4,15 +4,12 @@
     # Set working directory
     WORKDIR /app
     
-    # Copy the project files (excluding target/)
-    COPY pom.xml mvnw ./
+    # Copy the project files
+    COPY pom.xml ./
     COPY src ./src
     
-    # Grant execution permission for Maven wrapper
-    RUN chmod +x mvnw
-    
     # Build the application
-    RUN ./mvnw clean package -DskipTests
+    RUN mvn clean package -DskipTests
     
     # ---- Step 2: Run the app ----
     FROM eclipse-temurin:17-jdk
@@ -27,4 +24,4 @@
     EXPOSE 8080
     
     # Start the application
-    CMD ["java", "-jar", "app.jar"]
+    CMD ["java", "-jar", "app.jar"]    
