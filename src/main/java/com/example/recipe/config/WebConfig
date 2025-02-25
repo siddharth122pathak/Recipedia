@@ -2,6 +2,7 @@ package com.example.recipe.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -9,7 +10,14 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Serve static files from the root folder
         registry.addResourceHandler("/**")
                 .addResourceLocations("file:./");
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        // Make sure accessing "/" serves index.html from the root
+        registry.addViewController("/").setViewName("forward:/index.html");
     }
 }
