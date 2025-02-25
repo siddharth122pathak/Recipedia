@@ -7,7 +7,7 @@ document.getElementById('getRecipesBtn').addEventListener('click', function() {
     loading.style.display = 'block';
     recipeList.innerHTML = '';
 
-    fetch(`/api/recipes/v1/recipes/by-ingredients?ingredients=${ingredients.join(',')}`, {
+    fetch(`http://localhost:8080/api/recipes/v1/recipes/by-ingredients?ingredients=${ingredients.join(',')}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ document.getElementById('uploadImageBtn').addEventListener('click', function() {
 
     formData.append('file', fileInput.files[0]);
 
-    fetch('/api/recipes/v1/recipes/upload-image', {
+    fetch('http://localhost:8080/api/recipes/v1/recipes/upload-image', {
         method: 'POST',
         body: formData
     })
