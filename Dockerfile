@@ -5,9 +5,7 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
 # Copy the Maven wrapper and project files
-COPY .mvn/maven-wrapper.jar .mvn/maven-wrapper.jar 
-COPY .mvn/maven-wrapper.properties ./.mvn/maven-wrapper.properties
-COPY .mvn/MavenWrapperDownloader ./.mvn/wrapper/MavenWrapperDownloader.java
+COPY .mvn/wrapper .mvn/wrapper
 COPY mvnw ./
 COPY pom.xml ./
 COPY src ./src
