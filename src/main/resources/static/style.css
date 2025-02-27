@@ -116,3 +116,78 @@ button:hover {
 #recipeList li:hover {
     transform: scale(1.02);
 }
+
+
+.toggle-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.toggle-label {
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    position: relative;
+}
+
+.toggle-icon {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: #a64ac9;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+#dark-mode-toggle:checked + .toggle-label {
+    background-color: #333;
+}
+
+#dark-mode-toggle:checked + .toggle-label .toggle-icon {
+    transform: translateX(30px);
+}
+
+.dark-mode {
+    background-color: #0c0c0c;
+    color: #fff;
+}
+
+.dark-mode header {
+    background-color: #0c0c0c;
+}
+
+.dark-mode .container {
+    background-color: #0c0c0c;
+    backdrop-filter: blur(10px);
+}
+
+.dark-mode h1, .dark-mode h2 {
+    color: #fff;
+}
+
+.dark-mode textarea, .dark-mode input[type="file"] {
+    background-color: #666;
+    border-color: #fff;
+}
+
+.dark-mode button {
+    background: linear-gradient(45deg, #6a0dad, #a64ac9);
+    color: #fff;
+}
+
+.dark-mode .loader {
+    border-top: 8px solid #ffdd57;
+    border: 8px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark-mode #recipeList li {
+    background-color: #666;
+    border-radius: 10px;
+}
