@@ -83,8 +83,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const li = document.createElement("li");
             li.innerHTML = `
                 <h3>${recipe.title}</h3>
-                <p><strong>Ingredients:</strong><br> ${recipe.ingredients ? recipe.ingredients.join("<br>") : "N/A"}</p>
-                <p><strong>Instructions:</strong><br> ${recipe.instructions.replace(/\n/g, "<br>")}</p>
+                <p><strong>Ingredients:</strong></p>
+                <ul>
+                    ${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
+                </ul>
+                <p><strong>Instructions:</strong></p>
+                <ol>
+                    ${recipe.instructions.split('\n').map(instruction => `<li>${instruction}</li>`).join('')}
+                </ol>
             `;
             recipeList.appendChild(li);
         });

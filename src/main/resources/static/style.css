@@ -2,11 +2,12 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, #6a0dad, #4b0082);
+    background: linear-gradient(to right, #4b0082);
     color: white;
     margin: 0;
     padding: 0;
     text-align: center;
+    transition: background 0.5s ease, color 0.5s ease;
 }
 
 header {
@@ -16,6 +17,8 @@ header {
     font-size: 2.2em;
     font-weight: bold;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transition: background 0.5s ease, color 0.5s ease;
 }
 
 .container {
@@ -25,12 +28,19 @@ header {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(75, 0, 130, 0.8);
     animation: fadeIn 1s ease-in-out;
+    transition: background 0.5s ease, color 0.5s ease;
 }
 
-h1, h2 {
-    color: white;
+h1 {
+    color: #ffffff;
+    transition: color 0.5s ease;
+}
+
+h2 {
+    color: #4b0082;
+    transition: color 0.5s ease;
 }
 
 textarea, input[type="file"] {
@@ -41,7 +51,7 @@ textarea, input[type="file"] {
     background: rgba(255, 255, 255, 0.8);
     font-size: 1em;
     margin-top: 10px;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out, background 0.5s ease, border-color 0.5s ease;
 }
 
 textarea:focus, input[type="file"]:focus {
@@ -57,7 +67,7 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out, background 0.5s ease;
     font-size: 1em;
     margin-top: 10px;
 }
@@ -110,18 +120,30 @@ button:hover {
     padding: 15px;
     border-radius: 10px;
     margin: 10px 0;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, background 0.5s ease;
 }
 
 #recipeList li:hover {
     transform: scale(1.02);
 }
 
-
 .toggle-container {
     position: absolute;
     top: 20px;
     right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-text {
+    margin-right: 10px;
+    font-size: 1em;
+    color: white;
+    transition: color 0.5s ease;
+}
+
+#dark-mode-toggle {
+    display: none;
 }
 
 .toggle-label {
@@ -159,17 +181,27 @@ button:hover {
     color: #fff;
 }
 
+.dark-mode body {
+    background: linear-gradient(to right, #333, #111);
+}
+
 .dark-mode header {
     background-color: #0c0c0c;
 }
 
 .dark-mode .container {
-    background-color: #0c0c0c;
+    background-color: #333;
     backdrop-filter: blur(10px);
 }
 
-.dark-mode h1, .dark-mode h2 {
+.dark-mode h1 {
     color: #fff;
+    text-shadow: 2px 2px 5px rgba(75, 0, 130, 1);
+}
+
+.dark-mode h2 {
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(75, 0, 130, 0.8);
 }
 
 .dark-mode textarea, .dark-mode input[type="file"] {
@@ -180,6 +212,11 @@ button:hover {
 .dark-mode button {
     background: linear-gradient(45deg, #6a0dad, #a64ac9);
     color: #fff;
+}
+
+.dark-mode button:hover {
+    background: linear-gradient(45deg, #a64ac9, #6a0dad);
+    transform: scale(1.05);
 }
 
 .dark-mode .loader {
