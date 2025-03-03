@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to right, #4b0082);
@@ -43,6 +41,10 @@ h2 {
     transition: color 0.5s ease;
 }
 
+.input-section, .upload-section, .recipes-section {
+    margin-bottom: 20px;
+}
+
 textarea, input[type="file"] {
     width: 90%;
     padding: 10px;
@@ -72,17 +74,38 @@ button {
     margin-top: 10px;
 }
 
+button:hover {
+    background: linear-gradient(45deg, #6a0dad, #a64ac9);
+    transform: scale(1.05);
+}
+
+input[type="file"] {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#recipeList li {
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    background-color: #fafafa;
+    margin: 10px 0;
+    border-radius: 10px;
+    text-align: left;
+    color: #4b0082;
+    line-height: 1.5;
+    transition: transform 0.3s ease-in-out, background 0.5s ease;
+}
+
+#recipeList li:hover {
+    transform: scale(1.02);
+}
+
 .logo {
     position: absolute;
     top: 20px;
     left: 20px;
     width: 80px;
     height: auto;
-}
-
-button:hover {
-    background: linear-gradient(45deg, #6a0dad, #a64ac9);
-    transform: scale(1.05);
 }
 
 .loader {
@@ -95,36 +118,9 @@ button:hover {
     margin: 20px auto;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-}
-
-.recipes-section {
-    margin-top: 30px;
-}
-
-#recipeList li {
-    background: rgba(255, 255, 255, 0.15);
-    padding: 15px;
-    border-radius: 10px;
-    margin: 10px 0;
-    transition: transform 0.3s ease-in-out, background 0.5s ease;
-}
-
-#recipeList li:hover {
-    transform: scale(1.02);
 }
 
 .toggle-container {
@@ -182,7 +178,8 @@ button:hover {
 }
 
 .dark-mode body {
-    background: linear-gradient(to right, #333, #111);
+    background-color: #0c0c0c;
+    background: none;
 }
 
 .dark-mode header {
@@ -194,14 +191,8 @@ button:hover {
     backdrop-filter: blur(10px);
 }
 
-.dark-mode h1 {
+.dark-mode h1, .dark-mode h2 {
     color: #fff;
-    text-shadow: 2px 2px 5px rgba(75, 0, 130, 1);
-}
-
-.dark-mode h2 {
-    color: #fff;
-    text-shadow: 2px 2px 5px rgba(75, 0, 130, 0.8);
 }
 
 .dark-mode textarea, .dark-mode input[type="file"] {
@@ -220,11 +211,17 @@ button:hover {
 }
 
 .dark-mode .loader {
-    border-top: 8px solid #ffdd57;
     border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 8px solid #ffdd57;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1.5s linear infinite;
+    margin: 20px auto;
 }
 
 .dark-mode #recipeList li {
     background-color: #666;
     border-radius: 10px;
+    color: #fff;
 }
