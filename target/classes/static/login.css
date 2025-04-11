@@ -1,0 +1,78 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #4b0082);
+    color: white;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+header {
+    background: rgba(75, 0, 130, 0.9);
+    color: white;
+    padding: 20px;
+    font-size: 2.2em;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+.container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(75, 0, 130, 0.8);
+    animation: fadeIn 1s ease-in-out;
+    transition: background 0.5s ease, color 0.5s ease;
+}
+
+h1 {
+    color: #ffffff;
+    transition: color 0.5s ease;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #ffffff;
+}
+
+input[type="text"], input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    border: 2px solid #a64ac9;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 1em;
+    margin-bottom: 20px;
+    transition: all 0.3s ease-in-out, background 0.5s ease, border-color 0.5s ease;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 1);
+}
+
+button {
+    background: linear-gradient(45deg, #a64ac9, #6a0dad);
+    color: white;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out, background 0.5s ease;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #6a0dad, #a64ac9);
+    transform: scale(1.05);
+}
