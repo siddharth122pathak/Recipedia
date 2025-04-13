@@ -1,29 +1,26 @@
 package com.example.recipe.controller;
 
-import com.example.recipe.model.UserInfo;
 import com.example.recipe.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/users")
+@Controller
 public class UserInfoController {
 
     @Autowired
     private UserInfoService userInfoService;
 
-    @GetMapping
-    public List<UserInfo> getAllUsers() {
-        return userInfoService.getAllUsers();
-    }
+    @PostMapping("/login")
+    public String login(@RequestParam String username, @RequestParam String password) {
+        System.out.println("Received username: " + username);
+        System.out.println("Received password: " + password);
 
-    @GetMapping("/{id}")
-    public UserInfo getUserById(@PathVariable Long id) {
-        return userInfoService.getUserById(id);
+        if (userInfoService.validateUser(username, password)) {
+            return "redirect:/main.html"; // Redirect to main.html after successful login
+        } else {
+            return "redirect:/index.html?error=Invalid username or password"; // Redirect back to index.html with error
+        }
     }
 }

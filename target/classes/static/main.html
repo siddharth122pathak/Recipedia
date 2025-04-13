@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Recommender</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>RECIPEDIA</h1>
+        <div class="toggle-container">
+            <span class="toggle-text">Dark Mode</span>
+            <input type="checkbox" id="dark-mode-toggle" />
+            <label for="dark-mode-toggle" class="toggle-label">
+                <span class="toggle-icon"></span>
+            </label>
+        </div>
+    </header>
+    <img src="logo.png" alt="Logo" class="logo">
+    <div class="container">
+        <h2>Turn leftovers into gourmet meals—powered by AI!</h2>
+        <div class="input-section">
+            <h2>Enter Ingredients</h2>
+            <textarea id="ingredients" placeholder="List your ingredients here..."></textarea>
+            <button id="getRecipesBtn">Get Recipes</button>
+        </div>
+        <div class="upload-section">    
+            <h2>Or Upload a Photo of Your Pantry</h2>
+            <input type="file" id="imageUpload" accept="image/*">
+            <button id="uploadImageBtn">Upload Image</button>
+        </div>
+        <div id="loading" class="loader" style="display: none;"></div>
+        <div id="recipes" class="recipes-section">
+            <h2>Recommended Recipes</h2>
+            <ul id="recipeList"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

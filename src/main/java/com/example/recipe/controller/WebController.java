@@ -11,13 +11,13 @@ public class WebController {
 
     @GetMapping("/")
     public String home() {
-        logger.info("Handling request for /");
-        return "forward:/index.html";
+        logger.info("Redirecting to index.html (login page)");
+        return "redirect:/index.html"; // Redirect to the renamed index.html (previously login.html)
     }
 
-    @GetMapping("/login")
-    public String login() {
-        logger.info("Handling request for /login");
-        return "forward:/login.html";
+    @GetMapping("/main")
+    public String main() {
+        logger.info("Serving main.html (home page)");
+        return "forward:/main.html"; // Serve the renamed main.html (previously index.html)
     }
 }

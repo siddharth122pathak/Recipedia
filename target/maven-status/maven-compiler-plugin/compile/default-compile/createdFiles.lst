@@ -1,10 +1,7 @@
 com\example\recipe\RecipeRecommenderAppApplication.class
-com\example\recipe\repository\UserInfoRepository.class
 com\example\recipe\controller\UserInfoController.class
 com\example\recipe\controller\RecipeController.class
-com\example\recipe\model\UserInfo.class
 com\example\recipe\model\Recipe.class
-com\example\recipe\config\WebConfig
 com\example\recipe\controller\WebController.class
 com\example\recipe\service\RecipeService.class
 com\example\recipe\service\UserInfoService.class
