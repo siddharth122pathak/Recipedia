@@ -30,7 +30,7 @@ public class UserInfoController {
                         @RequestParam String password) {
         
         // Generate random 8-digit ID
-        int randomId = (int) (Math.random() * 10000000);
+        int randomId = (int) (Math.random() * 90000000) + 10000000; // Generates a random number between 10000000 and 99999999
         
         if (userInfoService.registerUser(randomId, firstName, lastName, username, email, password)) {
             return "redirect:/index.html?success=Registration successful! Please login with your credentials.";
