@@ -23,4 +23,19 @@ public class UserInfoController {
             return "redirect:/index.html?error=Invalid username or password"; // Redirect back to index.html with error
         }
     }
+
+    @PostMapping("/register")
+    public String register(@RequestParam String firstName, @RequestParam String lastName,
+                        @RequestParam String username, @RequestParam String email,
+                        @RequestParam String password) {
+        
+        // Generate random 8-digit ID
+        int randomId = (int) (Math.random() * 10000000);
+        
+        if (userInfoService.registerUser(randomId, firstName, lastName, username, email, password)) {
+            return "redirect:/index.html?success=Registration successful! Please login with your credentials.";
+        } else {
+            return "redirect:/register.html?error=Registration failed. Please try again.";
+        }
+    }
 }
