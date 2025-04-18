@@ -1,12 +1,21 @@
 package com.example.recipe.service;
 
 import com.example.recipe.model.Recipe;
+import com.example.recipe.model.UserPrompt;
 import com.example.recipe.util.AIUtil;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -15,6 +24,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 public class RecipeService {
 
     private final AIUtil aiUtil;
+
+    @Value("${supabase.api.url}")
+    private String supabaseApiUrl;
+
+    @Value("${supabase.api.key}")
+    private String supabaseApiKey;
+    
+    private final RestTemplate restTemplate = new RestTemplate();
 
     public RecipeService(AIUtil aiUtil) {
         this.aiUtil = aiUtil;
@@ -103,6 +120,34 @@ public class RecipeService {
             e.printStackTrace();
             return List.of();
         }
+    }
+    
+    public void storeUserPrompt(int userId, List<String> ingredients, List<Recipe> recipes) {
+        try {
+            String url = supabaseApiUrl + "/rest/v1/user_prompt?apikey=" + supabaseApiKey;
+            
+            // Create UserPrompt object
+            UserPrompt userPrompt = new UserPrompt();
+            userPrompt.setId(userId);
+            userPrompt.setUser_ask(ingredients);
+            userPrompt.setUser_recipe(recipes);
+            
+            // Convert UserPrompt to JSON
+            String payload = new ObjectMapper().writeValueAsString(userPrompt);
+            
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + supabaseApiKey);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            
+            HttpEntity<String> entity = new HttpEntity<>(payload, headers);
+            ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
+            
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                System.out.println("Failed to store user prompt: " + response.getBody());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error storing user prompt: " + e.getMessage());
+        }
     }    
-
 }

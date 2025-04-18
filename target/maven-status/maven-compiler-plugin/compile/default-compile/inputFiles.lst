@@ -1,8 +1,10 @@
 C:\Users\Siddharth Pathak\Documents\recipe-recommender-app\src\main\java\com\example\recipe\service\RecipeService.java
 C:\Users\Siddharth Pathak\Documents\recipe-recommender-app\src\main\java\com\example\recipe\controller\WebController.java
+C:\Users\Siddharth Pathak\Documents\recipe-recommender-app\src\main\java\com\example\recipe\model\UserInfo.java
 C:\Users\Siddharth Pathak\Documents\recipe-recommender-app\src\main\java\com\example\recipe\controller\UserInfoController.java
 C:\Users\Siddharth Pathak\Documents\recipe-recommender-app\src\main\java\com\example\recipe\service\UserInfoService.java
 C:\Users\Siddharth Pathak\Documents\recipe-recommender-app\src\main\java\com\example\recipe\controller\RecipeController.java
 C:\Users\Siddharth Pathak\Documents\recipe-recommender-app\src\main\java\com\example\recipe\RecipeRecommenderAppApplication.java
 C:\Users\Siddharth Pathak\Documents\recipe-recommender-app\src\main\java\com\example\recipe\util\AIUtil.java
 C:\Users\Siddharth Pathak\Documents\recipe-recommender-app\src\main\java\com\example\recipe\model\Recipe.java
+C:\Users\Siddharth Pathak\Documents\recipe-recommender-app\src\main\java\com\example\recipe\model\UserPrompt.java

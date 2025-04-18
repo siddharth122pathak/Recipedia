@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 //@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/recipes/v1/recipes")
@@ -18,8 +20,16 @@ public class RecipeController {
     private RecipeService recipeService;
 
     @GetMapping("/by-ingredients")
-    public ResponseEntity<List<Recipe>> getRecipesByIngredients(@RequestParam List<String> ingredients) {
+    public ResponseEntity<List<Recipe>> getRecipesByIngredients(@RequestParam List<String> ingredients, HttpServletRequest request) {
         List<Recipe> recipes = recipeService.generateRecipes(ingredients);
+        
+        // Get user ID from the session
+        Integer userId = (Integer) request.getSession().getAttribute("userId");
+        
+        if (userId != null) {
+            recipeService.storeUserPrompt(userId, ingredients, recipes);
+        }
+        
         return ResponseEntity.ok(recipes);
     }
 

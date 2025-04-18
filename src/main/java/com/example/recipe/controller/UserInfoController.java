@@ -1,6 +1,11 @@
 package com.example.recipe.controller;
 
 import com.example.recipe.service.UserInfoService;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,16 +18,21 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
+    public String login(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
         System.out.println("Received username: " + username);
         System.out.println("Received password: " + password);
 
-        if (userInfoService.validateUser(username, password)) {
-            return "redirect:/main.html"; // Redirect to main.html after successful login
+        Integer userId = userInfoService.validateUser(username, password);
+
+        if (userId != null) {
+            // Store user ID in the session
+            request.getSession().setAttribute("userId", userId);
+            return "redirect:/main.html";
         } else {
-            return "redirect:/index.html?error=Invalid username or password"; // Redirect back to index.html with error
+            return "redirect:/index.html?error=Invalid username or password";
         }
     }
+
 
     @PostMapping("/register")
     public String register(@RequestParam String firstName, @RequestParam String lastName,
