@@ -9,6 +9,7 @@
 <body>
     <header>
         <h1>RECIPEDIA</h1>
+        <!-- Dark mode toggle -->
         <div class="toggle-container">
             <span class="toggle-text">Dark Mode</span>
             <input type="checkbox" id="dark-mode-toggle" />
@@ -17,6 +18,7 @@
             </label>
         </div>
     </header>
+    <!-- Logo and main functionality -->
     <img src="logo.png" alt="Logo" class="logo">
     <div class="container">
         <h2>Turn leftovers into gourmet meals—powered by AI!</h2>
@@ -25,10 +27,16 @@
             <textarea id="ingredients" placeholder="List your ingredients here..."></textarea>
             <button id="getRecipesBtn">Get Recipes</button>
         </div>
-        <div class="upload-section">    
+        <div class="upload-section">
             <h2>Or Upload a Photo of Your Pantry</h2>
             <input type="file" id="imageUpload" accept="image/*">
             <button id="uploadImageBtn">Upload Image</button>
+        </div>
+        <!-- New Recent Recipes Button -->
+        <div class="recent-section">
+            <div class="recent-section">
+                <button id="recentBtn" onclick="window.location.href='/recent.html'">Recent Recipes</button>
+            </div>
         </div>
         <div id="loading" class="loader" style="display: none;"></div>
         <div id="recipes" class="recipes-section">

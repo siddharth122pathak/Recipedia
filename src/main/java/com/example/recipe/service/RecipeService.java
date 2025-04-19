@@ -4,6 +4,8 @@ import com.example.recipe.model.Recipe;
 import com.example.recipe.model.UserPrompt;
 import com.example.recipe.util.AIUtil;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import java.time.LocalDateTime;
 
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +36,7 @@ public class RecipeService {
     private String supabaseApiKey;
     
     private final RestTemplate restTemplate = new RestTemplate();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     public RecipeService(AIUtil aiUtil) {
         this.aiUtil = aiUtil;
@@ -121,7 +126,7 @@ public class RecipeService {
             return List.of();
         }
     }
-    
+
     public void storeUserPrompt(int userId, List<String> ingredients, List<Recipe> recipes) {
         try {
             String url = supabaseApiUrl + "/rest/v1/user_prompt?apikey=" + supabaseApiKey;
@@ -131,6 +136,7 @@ public class RecipeService {
             userPrompt.setId(userId);
             userPrompt.setUser_ask(ingredients);
             userPrompt.setUser_recipe(recipes);
+            userPrompt.setCreated_at(LocalDateTime.now().toString()); // Set current DateTime as the created_at
             
             // Convert UserPrompt to JSON
             String payload = new ObjectMapper().writeValueAsString(userPrompt);
@@ -149,5 +155,38 @@ public class RecipeService {
             e.printStackTrace();
             System.out.println("Error storing user prompt: " + e.getMessage());
         }
-    }    
+    }
+
+    public List<UserPrompt> getUserPromptsByUserId(int userId) {
+        List<UserPrompt> userPrompts = new ArrayList<>();
+        try {
+            String url = supabaseApiUrl + "/rest/v1/user_prompt?id=eq." + userId + "&apikey=" + supabaseApiKey;
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + supabaseApiKey);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class, entity);
+    
+            if (response.getStatusCode().is2xxSuccessful()) {
+                JSONArray jsonArray = new JSONArray(response.getBody());
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject userPromptObj = jsonArray.getJSONObject(i);
+                    UserPrompt userPrompt = new UserPrompt();
+    
+                    userPrompt.setId(userPromptObj.getInt("id"));
+                    System.out.println("User Prompt ID: " + userPromptObj.getInt("id")); // Debugging
+                    userPrompt.setUser_ask(Arrays.asList(userPromptObj.getString("user_ask").replaceAll("[\\[\\]\"]", "").split(",")));
+                    System.out.println("User Ask: " + userPromptObj.getString("user_ask")); // Debugging
+                    userPrompt.setUser_recipe(objectMapper.readValue(userPromptObj.getString("user_recipe"), new TypeReference<List<Recipe>>() {}));
+                    System.out.println("User Recipe: " + userPromptObj.getString("user_recipe")); // Debugging
+                    userPrompt.setCreated_at(userPromptObj.getString("created_at"));
+                    System.out.println("Created At: " + userPromptObj.getString("created_at")); // Debugging
+    
+                    userPrompts.add(userPrompt);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userPrompts;
+    }
 }

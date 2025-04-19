@@ -90,6 +90,8 @@ public class UserInfoService {
             
             HttpEntity<String> entity = new HttpEntity<>(payload, headers);
             ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
+
+            System.out.println("Supabase API Response: " + response.getBody());
             
             return response.getStatusCode().is2xxSuccessful();
         } catch (Exception e) {

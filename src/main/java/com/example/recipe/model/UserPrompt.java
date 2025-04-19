@@ -6,6 +6,7 @@ public class UserPrompt {
     private int id;
     private List<String> user_ask;
     private List<Recipe> user_recipe;
+    private String created_at;
 
     // Getters and Setters
     public int getId() { 
@@ -30,5 +31,13 @@ public class UserPrompt {
 
     public void setUser_recipe(List<Recipe> user_recipe) { 
         this.user_recipe = user_recipe; 
+    }
+
+    public String getCreated_at() { 
+        return created_at; 
+    }
+
+    public void setCreated_at(String created_at) { 
+        this.created_at = created_at;
     }
 }

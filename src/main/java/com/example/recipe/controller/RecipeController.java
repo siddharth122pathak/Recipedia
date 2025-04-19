@@ -1,8 +1,10 @@
 package com.example.recipe.controller;
 
 import com.example.recipe.model.Recipe;
+import com.example.recipe.model.UserPrompt;
 import com.example.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,5 +39,15 @@ public class RecipeController {
     public ResponseEntity<List<Recipe>> uploadImage(@RequestParam("file") MultipartFile file) {
         List<Recipe> recipes = recipeService.processImage(file);
         return ResponseEntity.ok(recipes);
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<List<UserPrompt>> getrecent(HttpServletRequest request) {
+        Integer userId = (Integer) request.getSession().getAttribute("userId");
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        List<UserPrompt> userPrompts = recipeService.getUserPromptsByUserId(userId);
+        return ResponseEntity.ok(userPrompts);
     }
 }
