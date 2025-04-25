@@ -225,3 +225,26 @@ input[type="file"] {
     border-radius: 10px;
     color: #fff;
 }
+
+/* Sidebar styles */
+.sidebar {
+    height: 100%;
+    width: 200px; /* Width of the sidebar */
+    position: fixed; /* Fixed position */
+    background-color: #8c08eb; /* Dark background for sidebar */
+    padding-top: 20px; /* Top padding */
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #ffffff; /* Light gray for text */
+    display: block; /* Each item as a block */
+    transition: 0.3s; /* Smooth transition */
+}
+
+.sidebar a:hover {
+    color: #f1f1f1; /* Light color on hover */
+    background-color: #575757; /* Background change on hover */
+}

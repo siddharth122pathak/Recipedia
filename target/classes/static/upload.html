@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload - Recipe Recommender</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Upload Image - RECIPEDIA</h1>
+        <!-- Dark mode toggle -->
+        <div class="toggle-container">
+            <span class="toggle-text">Dark Mode</span>
+            <input type="checkbox" id="dark-mode-toggle" />
+            <label for="dark-mode-toggle" class="toggle-label">
+                <span class="toggle-icon"></span>
+            </label>
+        </div>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+        <a href="main.html">Text</a>
+        <a href="upload.html">Image</a>
+        <a href="recent.html">Recent Recipes</a>
+        <a href="account.html">Account</a>
+    </div>
+
+    <!-- Logo -->
+    <img src="logo.png" alt="Logo" class="logo">
+
+    <div class="container">
+        <h2>Upload a Photo of Your Pantry</h2>
+        <input type="file" id="imageUpload" accept="image/*">
+        <button id="uploadImageBtn">Upload Image</button>
+        <div id="loading" class="loader" style="display: none;"></div>
+        <div id="recipes" class="recipes-section">
+            <h2>Recommended Recipes</h2>
+            <ul id="recipeList"></ul>
+        </div>
+    </div>
+
+    <script src="upload.js"></script>
+</body>
+</html>
