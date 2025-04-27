@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register to Recipedia</title>
     <link rel="stylesheet" href="register.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.10.2/lottie.min.js"></script> <!-- Lottie Library -->
 </head>
 <body>
     <header>
         <h1>Create Your Account</h1>
     </header>
-    <div class="container">
+
+    <img src="logo.png" alt="Logo" class="logo">
+
+    <div class="container" id="formContainer">
         <form id="registerForm" action="/register" method="POST">
             <div class="input-section">
                 <label for="firstName">First Name:</label>
@@ -34,25 +38,35 @@
             </div>
             <button type="submit">Register</button>
         </form>
-        <div class="success" id="success" style="display: none; color: green;">
-            User registered successfully! Please go to login page to access your account.
-        </div>
     </div>
+
+    <!-- Hidden animation container -->
+    <div id="successAnimation" class="animation-container"></div>
+
     <script>
-        // Handle form submission
         document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Submit the form
-            this.submit();
-            
-            // Show success message
-            document.getElementById('success').style.display = 'block';
-            
-            // Redirect to login page after 3 seconds
-            setTimeout(() => {
+
+            // Hide the form
+            document.getElementById('formContainer').style.display = 'none';
+
+            // Show animation container
+            const animationContainer = document.getElementById('successAnimation');
+            animationContainer.style.display = 'block';
+
+            // Load Lottie animation
+            const animation = lottie.loadAnimation({
+                container: animationContainer,
+                renderer: 'svg',
+                loop: false,
+                autoplay: true,
+                path: '/animation.json' // Make sure path is correct!
+            });
+
+            // When animation completes, redirect to login page
+            animation.addEventListener('complete', () => {
                 window.location.href = '/index.html';
-            }, 3000);
+            });
         });
     </script>
 </body>

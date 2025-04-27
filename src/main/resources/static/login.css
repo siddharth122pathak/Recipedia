@@ -67,6 +67,14 @@ input[type="text"]:focus, input[type="password"]:focus {
     background: rgba(255, 255, 255, 1);
 }
 
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 60px;
+    height: auto;
+}
+
 button {
     background: linear-gradient(45deg, #50698D, #EBB2C3); /* Blue to peach gradient */
     color: #ffffff;
