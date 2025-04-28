@@ -11,10 +11,7 @@
     <header>
         <h1>Create Your Account</h1>
     </header>
-
-    <img src="logo.png" alt="Logo" class="logo">
-
-    <div class="container" id="formContainer">
+    <div class="container">
         <form id="registerForm" action="/register" method="POST">
             <div class="input-section">
                 <label for="firstName">First Name:</label>
@@ -38,36 +35,58 @@
             </div>
             <button type="submit">Register</button>
         </form>
+        <div class="success" id="success" style="display: none; color: green;">
+            User registered successfully! Please go to login page to access your account.
+        </div>
     </div>
-
     <!-- Hidden animation container -->
     <div id="successAnimation" class="animation-container"></div>
-
     <script>
         document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
-            // Hide the form
-            document.getElementById('formContainer').style.display = 'none';
-
-            // Show animation container
-            const animationContainer = document.getElementById('successAnimation');
-            animationContainer.style.display = 'block';
-
-            // Load Lottie animation
-            const animation = lottie.loadAnimation({
-                container: animationContainer,
-                renderer: 'svg',
-                loop: false,
-                autoplay: true,
-                path: '/animation.json' // Make sure path is correct!
-            });
-
-            // When animation completes, redirect to login page
-            animation.addEventListener('complete', () => {
-                window.location.href = '/index.html';
+        
+            const form = this;
+            const formData = new FormData(form);
+        
+            // Send the form data manually using fetch (AJAX)
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Registration succeeded!
+        
+                    // Hide the form
+                    form.style.display = 'none';
+        
+                    // Show animation container
+                    const animationContainer = document.getElementById('successAnimation');
+                    animationContainer.style.display = 'block';
+        
+                    // Load Lottie animation
+                    const animation = lottie.loadAnimation({
+                        container: animationContainer,
+                        renderer: 'svg',
+                        loop: false,
+                        autoplay: true,
+                        path: '/animation.json' // Correct path
+                    });
+        
+                    // When animation completes, redirect to login page
+                    animation.addEventListener('complete', () => {
+                        window.location.href = '/index.html';
+                    });
+        
+                } else {
+                    alert('Registration failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+                alert('Something went wrong. Please try again.');
             });
         });
-    </script>
+    </script>        
 </body>
 </html>
