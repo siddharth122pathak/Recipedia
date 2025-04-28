@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Upload - Recipe Recommender</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
     <header>
@@ -22,10 +23,10 @@
 
     <!-- Sidebar Menu -->
     <div class="sidebar">
-        <a href="main.html">Text</a>
-        <a href="upload.html">Image</a>
-        <a href="recent.html">Recent Recipes</a>
-    </div>
+        <a href="#" class="sidebar-link" data-target="main.html">Text</a>
+        <a href="#" class="sidebar-link" data-target="upload.html">Image</a>
+        <a href="#" class="sidebar-link" data-target="recent.html">Recent Recipes</a>
+    </div> 
 
     <!-- Logo -->
     <img src="logo.png" alt="Logo" class="logo">
@@ -42,5 +43,24 @@
     </div>
 
     <script src="upload.js"></script>
+    <script>
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+        
+                // Animate fade out effect
+                gsap.to('body', { 
+                    opacity: 0, 
+                    duration: 0.5, 
+                    onComplete: () => {
+                        window.location.href = this.getAttribute('data-target');
+                    }
+                });
+            });
+        });
+        
+        // Optional: Animate fade in when page loads
+        gsap.from('body', { opacity: 0, duration: 0.5 });
+    </script>
 </body>
 </html>
