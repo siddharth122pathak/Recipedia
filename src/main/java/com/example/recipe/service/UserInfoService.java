@@ -9,7 +9,9 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,7 +29,12 @@ public class UserInfoService {
     @Value("${supabase.api.key}")
     private String supabaseApiKey;
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate = new RestTemplate();
+
+    public UserInfoService() {
+        // Configure RestTemplate to support PATCH
+        this.restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+    }
 
     public Integer validateUser(String username, String password) {
         try {
@@ -94,6 +101,45 @@ public class UserInfoService {
             System.out.println("Supabase API Response: " + response.getBody());
             
             return response.getStatusCode().is2xxSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean resetPassword(String username, String newPassword) {
+        try {
+            // Step 1: Verify if the user exists
+            String verifyUrl = supabaseApiUrl + "/rest/v1/user_info?username=eq." + username + "&apikey=" + supabaseApiKey;
+    
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + supabaseApiKey);
+    
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            ResponseEntity<String> response = restTemplate.getForEntity(verifyUrl, String.class, entity);
+    
+            if (response.getBody() == null || response.getBody().equals("[]")) {
+                System.out.println("User not found.");
+                return false;
+            }
+    
+            // Step 2: Update the user's password
+            JSONArray jsonArray = new JSONArray(response.getBody());
+            JSONObject userObject = jsonArray.getJSONObject(0);
+            int userId = userObject.getInt("id"); // Assuming "id" is the primary key
+    
+            String updateUrl = supabaseApiUrl + "/rest/v1/user_info?id=eq." + userId + "&apikey=" + supabaseApiKey;
+    
+            // Create a JSON payload with only the password field
+            JSONObject payload = new JSONObject();
+            payload.put("password", newPassword);
+    
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> updateEntity = new HttpEntity<>(payload.toString(), headers);
+    
+            ResponseEntity<String> updateResponse = restTemplate.exchange(updateUrl, HttpMethod.PATCH, updateEntity, String.class);
+    
+            return updateResponse.getStatusCode().is2xxSuccessful();
         } catch (Exception e) {
             e.printStackTrace();
             return false;

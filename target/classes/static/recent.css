@@ -20,6 +20,20 @@ header {
     transition: background 0.5s ease, color 0.5s ease;
 }
 
+h1 {
+    margin: 0;
+    padding: 0;
+    color: #ffffff; /* Blue text color */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+h6 {
+    margin: 20px;
+    padding: 0;
+    color: #ffffff; /* Blue text color */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 .container {
     max-width: 800px;
     margin: 40px auto;

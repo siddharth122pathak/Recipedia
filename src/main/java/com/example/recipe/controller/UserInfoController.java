@@ -2,13 +2,17 @@ package com.example.recipe.controller;
 
 import com.example.recipe.service.UserInfoService;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -46,6 +50,24 @@ public class UserInfoController {
             return "redirect:/index.html?success=Registration successful! Please login with your credentials.";
         } else {
             return "redirect:/register.html?error=Registration failed. Please try again.";
+        }
+    }
+
+    @PostMapping("/forget-password")
+    public ResponseEntity<Map<String, String>> forgetPassword(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String newPassword = request.get("newPassword");
+
+        boolean isUpdated = userInfoService.resetPassword(username, newPassword);
+
+        if (isUpdated) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Password reset successfully.");
+            return ResponseEntity.ok(response);
+        } else {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Invalid username.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 }
