@@ -1,5 +1,6 @@
 package com.example.recipe.controller;
 
+import com.example.recipe.model.UserInfo;
 import com.example.recipe.service.UserInfoService;
 
 import java.util.HashMap;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -31,6 +34,10 @@ public class UserInfoController {
         if (userId != null) {
             // Store user ID in the session
             request.getSession().setAttribute("userId", userId);
+            UserInfo userInfo = userInfoService.getUserInfoById(userId);
+            if (userInfo != null) {
+                request.getSession().setAttribute("userInfo", userInfo);
+            }
             return "redirect:/main.html";
         } else {
             return "redirect:/index.html?error=Invalid username or password";
@@ -68,6 +75,31 @@ public class UserInfoController {
             Map<String, String> response = new HashMap<>();
             response.put("message", "Invalid username.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @GetMapping("/account")
+    public ResponseEntity<UserInfo> getAccountInfo(HttpServletRequest request) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        if (userInfo != null) {
+            return ResponseEntity.ok(userInfo);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @PutMapping("/account")
+    public ResponseEntity<String> updateAccountInfo(@RequestBody UserInfo updatedUserInfo, HttpServletRequest request) {
+        Integer userId = (Integer) request.getSession().getAttribute("userId");
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in.");
+        }
+
+        boolean isUpdated = userInfoService.updateUserInfo(userId, updatedUserInfo);
+        if (isUpdated) {
+            return ResponseEntity.ok("User information updated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update user information.");
         }
     }
 }

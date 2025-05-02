@@ -145,4 +145,55 @@ public class UserInfoService {
             return false;
         }
     }
+
+    public UserInfo getUserInfoById(int userId) {
+        try {
+            String url = supabaseApiUrl + "/rest/v1/user_info?id=eq." + userId + "&apikey=" + supabaseApiKey;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + supabaseApiKey);
+
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class, entity);
+
+            if (response.getBody() != null && !response.getBody().equals("[]")) {
+                JSONArray jsonArray = new JSONArray(response.getBody());
+                JSONObject userObject = jsonArray.getJSONObject(0);
+
+                UserInfo userInfo = new UserInfo();
+                userInfo.setId(userObject.getInt("id"));
+                userInfo.setFirst_name(userObject.getString("first_name"));
+                userInfo.setLast_name(userObject.getString("last_name"));
+                userInfo.setUsername(userObject.getString("username"));
+                userInfo.setEmail(userObject.getString("email"));
+                userInfo.setPassword(userObject.getString("password"));
+
+                return userInfo;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean updateUserInfo(int userId, UserInfo updatedUserInfo) {
+        try {
+            String url = supabaseApiUrl + "/rest/v1/user_info?id=eq." + userId + "&apikey=" + supabaseApiKey;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + supabaseApiKey);
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String payload = objectMapper.writeValueAsString(updatedUserInfo);
+
+            HttpEntity<String> entity = new HttpEntity<>(payload, headers);
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, entity, String.class);
+
+            return response.getStatusCode().is2xxSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
